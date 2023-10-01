@@ -34,6 +34,7 @@ public class SwipeManager : MonoBehaviour
         {
             Instance = this;
             EnableSwipes(true);
+            DontDestroyOnLoad(this);
         }
         else
         {
@@ -58,10 +59,11 @@ public class SwipeManager : MonoBehaviour
 
     private void OnDisable()
     {
+        if (inputManager == null) return;
         // Subscribe to the OnStartTouchEvent
-        inputManager.OnStartTouch += StartTouch;
-        inputManager.OnEndTouch += EndTouch;
-        inputManager.OnTouchMoved += TouchMoved;
+        inputManager.OnStartTouch -= StartTouch;
+        inputManager.OnEndTouch -= EndTouch;
+        inputManager.OnTouchMoved -= TouchMoved;
     }
 
     private void StartTouch(Finger finger, float time)
@@ -114,6 +116,7 @@ public class SwipeManager : MonoBehaviour
         currentSwipeID = int.MinValue;
         stopTouch = false;
 
+        if(Input.touches.Length > 0)
         endTouchPos = Input.GetTouch(0).position;
         Vector2 dist = endTouchPos - startTouchPos;
 

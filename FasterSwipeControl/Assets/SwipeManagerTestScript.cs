@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SwipeManagerTestScript : MonoBehaviour
 {
@@ -11,5 +12,10 @@ public class SwipeManagerTestScript : MonoBehaviour
     void Update()
     {
         outputText.text = SwipeManager.Instance.Direction.ToString();
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
+        }
     }
 }
